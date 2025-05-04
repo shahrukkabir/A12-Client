@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
-import { FaHome, FaUserCircle, FaChalkboardTeacher, FaBlog } from "react-icons/fa";
-import { MdOutlineClass } from "react-icons/md";
+import { FaHome, FaUserCircle, FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineClass, MdMenu } from "react-icons/md";
 import ThemeToggleButton from "../../../components/ThemeToggleButton";
 import { useContext, useState } from "react";
 import { SiSemanticscholar } from "react-icons/si";
@@ -27,7 +27,7 @@ const NavBar = () => {
       text: "You will be logged out!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#00897B",
+      confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, log me out!",
       cancelButtonText: "Cancel",
@@ -55,7 +55,7 @@ const NavBar = () => {
   const dropdownLinks = (
     <>
       {user && user.email ? (
-        <p className="text-center hidden">{user.displayName}</p>
+        <p className="text-center">{user.displayName}</p>
       ) : (
         <p className="text-center">Guest</p>
       )}
@@ -63,12 +63,6 @@ const NavBar = () => {
         <NavLink to="/dashboard">
           <FaChalkboardTeacher />
           Dashboard
-        </NavLink>
-      </li>
-      <li className="text-gray-700 font-bold">
-        <NavLink to="/blog">
-          <FaBlog />
-          Blog
         </NavLink>
       </li>
       <li className="text-gray-700 font-bold">
@@ -106,7 +100,7 @@ const NavBar = () => {
   );
 
   return (
-    <div className="navbar sticky top-0 z-50 px-5 lg:px-10 justify-between bg-gradient-to-r from-teal-100 to-teal-200 shadow-md">
+    <div className="navbar bg-base-100 lg:px-10 justify-between">
       <div className="flex items-center">
         <Link
           to="/"
@@ -114,6 +108,16 @@ const NavBar = () => {
         >
           <SiSemanticscholar /> EduSphere
         </Link>
+        <div className="lg:hidden ml-4">
+          <button className="text-2xl m-2 z-50" onClick={handleDropdownToggle}>
+            <MdMenu />
+          </button>
+          {isDropdownOpen && (
+            <ul className="menu menu-vertical p-2 shadow bg-base-100 rounded-box mt-2 w-52">
+              {mainLinks}
+            </ul>
+          )}
+        </div>
       </div>
 
       <div
@@ -155,31 +159,13 @@ const NavBar = () => {
               tabIndex={0}
               className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li className="text-gray-700 font-bold lg:hidden">
-                <NavLink to="/">
-                  <FaHome />
-                  Home
-                </NavLink>
-              </li>
-              <li className="text-gray-700 font-bold lg:hidden">
-                <NavLink to="/allclasses">
-                  <MdOutlineClass />
-                  All Classes
-                </NavLink>
-              </li>
-              <li className="text-gray-700 font-bold lg:hidden">
-                <NavLink to="/teachon">
-                  <FaChalkboardTeacher />
-                  Teach on EduSphere
-                </NavLink>
-              </li>
               {dropdownLinks}
             </ul>
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-2">
             <Link
-              className="bg-teal-800 text-white p-1 lg:p-2 text-center rounded"
+              className="bg-gray-700 text-white p-1 lg:p-2 text-center rounded"
               to="/auth/signin"
             >
               Sign In
